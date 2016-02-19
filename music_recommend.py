@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 """
-	
+
 	this script use python3 and work period to get the
 	recommend music from netease.
 
@@ -12,9 +12,9 @@ import sqlite3
 from netease import NetEase
 
 
-# config 
-USERNAME = '15897970114'
-PASSWORD = 'c651bf7febcc1f324a984529959a0950'
+# config
+USERNAME = 'your username'
+PASSWORD = 'your password'
 DATABASE_URL = 'recommend.db'
 
 UPDATE_PERIOD = 6 * 60 * 60
@@ -43,8 +43,8 @@ def get_song_list():
         item['artist'] = song['artist']
         item['song_name'] = song['song_name']
         collection.append(item)
-    return collection 
-		
+    return collection
+
 
 @period(UPDATE_PERIOD)
 def start():
@@ -54,7 +54,7 @@ def start():
         cursor.execute('delete from music_recommend')
         for song in songs:
             cursor.execute("insert into music_recommend(name, singer) values(?, ?)",
-                (song['song_name'], song['artist']))        
+                (song['song_name'], song['artist']))
         db.commit()
 
 
