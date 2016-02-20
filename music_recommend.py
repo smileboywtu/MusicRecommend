@@ -7,27 +7,17 @@
 
 """
 
-import time
 import sqlite3
 from netease import NetEase
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 # config
-USERNAME = 'your username'
-PASSWORD = 'your password'
+USERNAME = '15897970114'
+PASSWORD = 'c651bf7febcc1f324a984529959a0950'
 DATABASE_URL = 'recommend.db'
 
-UPDATE_PERIOD = 6 * 60 * 60
-
-
-
-def period(seconds):
-    """ use this to sleep the program."""
-    def schedule(func, *args):
-        while True:
-            func(*args)
-            time.sleep(seconds)
-    return schedule
+UPDATE_PERIOD = 30 * 60
 
 
 def get_song_list():
@@ -46,7 +36,6 @@ def get_song_list():
     return collection
 
 
-@period(UPDATE_PERIOD)
 def start():
     songs = get_song_list()
     with sqlite3.connect(DATABASE_URL) as db:
@@ -59,4 +48,10 @@ def start():
 
 
 if __name__ == '__main__':
-    start()
+    scheduler = BlockingScheduler()
+    scheduler.add_job(start, 'interval', seconds=UPDATE_PERIOD)
+    try:
+        scheduler.start()
+    except KeyboardInterrupt, SystemExit:
+        pass
+
