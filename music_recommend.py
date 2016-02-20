@@ -13,8 +13,8 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 # config
-USERNAME = '15897970114'
-PASSWORD = 'c651bf7febcc1f324a984529959a0950'
+USERNAME = 'your username'
+PASSWORD = 'your processes password'
 DATABASE_URL = 'recommend.db'
 
 UPDATE_PERIOD = 30 * 60
@@ -54,4 +54,3 @@ if __name__ == '__main__':
         scheduler.start()
     except KeyboardInterrupt, SystemExit:
         pass
-
